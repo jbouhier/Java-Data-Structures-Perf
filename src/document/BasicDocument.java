@@ -54,9 +54,15 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 2 support videos 
-        // if you need help.
-        return 0;
+		int sentenceCount = 0;
+		String[] text = this.getText().split("");
+
+		for (int i = 0; i < text.length; i++) {
+			if (text[i].equals(".") || text[i].equals("!") || text[i].equals("."))
+				sentenceCount++;
+		}
+
+        return sentenceCount;
 	}
 	
 	/**
@@ -79,9 +85,13 @@ public class BasicDocument extends Document
 	    //TODO: Implement this method in week 2.  See the Module 2 support videos 
         // if you need help.  And note that there is no need to use a regular
 		// expression for the syllable counting.  We recommend you implement 
-		// the helper function countSyllables in Document.java using a loop, 
+		// the helper function countSyllables in Document.java using a loop,
 		// and then call it here on each word.
-        return 0;
+
+//		this.getText();
+//		return countSyllables(word);
+
+		return 0;
 	}
 	
 	
