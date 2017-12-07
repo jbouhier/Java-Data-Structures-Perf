@@ -34,7 +34,7 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-	    return getTokens("[a-zA-Z]+").size();
+	    return getTokens("[a-zA-Z]+\\s*[.!?,–]*\\s*").size();
 	}
 	
 	/**
@@ -52,26 +52,18 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-		int sentenceCount = 0;
-		String[] text = this.getText().split("");
-
-		for (int i = 0; i < text.length; i++) {
-			if (text[i].equals(".") || text[i].equals("!") || text[i].equals("."))
-				sentenceCount++;
-		}
-
-        return sentenceCount;
+        return getTokens("(\\s*\\(*[\\w,;\\s]+\\)*\\s*([,.]\\d+)*)([.!?:]+|$)").size();
 	}
 	
 	/**
-	 * Get the total number of syllables in the document (the stored text). 
+	 * Get the total number of syllables in the document (the stored text).
 	 * To count the number of syllables in a word, it uses the following rules:
-	 *       Each contiguous sequence of one or more vowels is a syllable, 
-	 *       with the following exception: a lone "e" at the end of a word 
-	 *       is not considered a syllable unless the word has no other syllables. 
+	 *       Each contiguous sequence of one or more vowels is a syllable,
+	 *       with the following exception: a lone "e" at the end of a word
+	 *       is not considered a syllable unless the word has no other syllables.
 	 *       You should consider y a vowel.
-	 *       
-	 * Check the examples in the main method below for more information.  
+	 *
+	 * Check the examples in the main method below for more information.
 	 * 
 	 * This method should process the entire text string each time it is called.  
 	 * 
@@ -80,14 +72,15 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSyllables()
 	{
-	    //TODO: Implement this method in week 2.  See the Module 2 support videos 
-        // if you need help.  And note that there is no need to use a regular
-		// expression for the syllable counting.  We recommend you implement 
+	    //TODO: No need for regex. Recommend to implement
 		// the helper function countSyllables in Document.java using a loop,
 		// and then call it here on each word.
 
 //		this.getText();
 //		return countSyllables(word);
+
+		// Loop 1 -> split words
+			// countSyllables(word);
 
 		return 0;
 	}
