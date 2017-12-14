@@ -70,19 +70,16 @@ public class BasicDocument extends Document
 	 * @return The number of syllables in the document.
 	 */
 	@Override
-	public int getNumSyllables()
-	{
-	    //TODO: No need for regex. Recommend to implement
-		// the helper function countSyllables in Document.java using a loop,
-		// and then call it here on each word.
+	public int getNumSyllables() {
+		int      count      =  0;
+		String[] textStrArr =  this.getText().toLowerCase().split(" ");
 
-//		this.getText();
-//		return countSyllables(word);
+		for (String word : textStrArr) {
+			word = word.replaceAll("[^a-z]+", "");
+			count += countSyllables(word);
+		}
 
-		// Loop 1 -> split words
-			// countSyllables(word);
-
-		return 0;
+		return count;
 	}
 	
 	

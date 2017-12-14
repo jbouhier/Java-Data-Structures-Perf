@@ -62,12 +62,40 @@ public abstract class Document {
 	 *       is not considered a syllable unless the word has no other syllables. 
 	 *       You should consider y a vowel.
 	 */
-	protected int countSyllables(String word)
-	{
-		// TODO: Implement this method so that you can call it from the 
-	    // getNumSyllables method in BasicDocument (module 2) and 
-	    // EfficientDocument (module 3).
-	    return 0;
+	protected int countSyllables(String word) {
+		// TODO: and EfficientDocument (module 3).
+		// Each contiguous sequence of 1 or more vowels is a syllable
+		// Except a lone "e" at the end of a word, unless the word has no other syllables
+
+		int      syllables =  0;
+		boolean  preVowel  =  false;
+		char[]   wordArr   =  word.toCharArray();
+		int      len       =  wordArr.length - 1;
+
+		for (int i = 0; i <= len; i++) {
+			char c = wordArr[i];
+
+			if (isVowel(c)) {
+				if (!preVowel) {
+//					if (i == len) {
+//						if (c == 'e' && syllables <= 1) syllables++;
+//					} else {
+//						preVowel = true;
+//						syllables++;
+//					}
+					preVowel = true;
+					syllables++;
+				}
+			} else {
+				preVowel = false;
+			}
+		}
+
+	    return syllables;
+	}
+
+	private boolean isVowel(char c) {
+		return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' | c == 'y');
 	}
 	
 	/** A method for testing
