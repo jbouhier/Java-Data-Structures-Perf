@@ -65,25 +65,23 @@ public abstract class Document {
 	protected int countSyllables(String word) {
 		// TODO: EfficientDocument (module 3).
 
-		int      numSyllables  =  0;
-		boolean  newSyllable   =  true;
-		String   vowels        =  "aeiouy";
-		char[]   cArray        =  word.toCharArray();
+		int numSyllables = 0;
+		boolean newSyllable = true;
+		String vowels = "aeiouy";
+		char[] cArray = word.toCharArray();
 
-		for (int i = 0; i < cArray.length; i++)
-		{
-			char c = cArray[i];
-
-			if (i == cArray.length - 1 && c == 'e' && newSyllable && numSyllables > 0)
+		for (int i = 0; i < cArray.length; i++) {
+			if (i == cArray.length-1 && Character.toLowerCase(cArray[i]) == 'e'
+					&& newSyllable && numSyllables > 0) {
 				numSyllables--;
+			}
 
-			if (newSyllable && vowels.indexOf(c) >= 0) {
+			if (newSyllable && vowels.indexOf(Character.toLowerCase(cArray[i])) >= 0) {
 				newSyllable = false;
 				numSyllables++;
-
-			} else {
-				newSyllable = true;
 			}
+			else if (vowels.indexOf(Character.toLowerCase(cArray[i])) < 0)
+				newSyllable = true;
 		}
 
 		return numSyllables;
@@ -150,8 +148,8 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-		return 206.835 - 1.015 * (getNumWords() / getNumSentences()) -
-		       84.6 * (getNumSyllables() / getNumWords());
+		return 206.835 - 1.015 * getNumWords() / getNumSentences() -
+		       84.6 * getNumSyllables() / getNumWords();
 	}
 	
 
