@@ -63,40 +63,32 @@ public abstract class Document {
 	 *       You should consider y a vowel.
 	 */
 	protected int countSyllables(String word) {
-		// TODO: and EfficientDocument (module 3).
-		// Each contiguous sequence of 1 or more vowels is a syllable
-		// Except a lone "e" at the end of a word, unless the word has no other syllables
+		// TODO: EfficientDocument (module 3).
 
-		int      syllables =  0;
-		boolean  preVowel  =  false;
-		char[]   wordArr   =  word.toCharArray();
-		int      len       =  wordArr.length - 1;
+		int      numSyllables  =  0;
+		boolean  newSyllable   =  true;
+		String   vowels        =  "aeiouy";
+		char[]   cArray        =  word.toCharArray();
 
-		for (int i = 0; i <= len; i++) {
-			char c = wordArr[i];
+		for (int i = 0; i < cArray.length; i++)
+		{
+			char c = cArray[i];
 
-			if (isVowel(c)) {
-				if (!preVowel) {
-//					if (i == len) {
-//						if (c == 'e' && syllables <= 1) syllables++;
-//					} else {
-//						preVowel = true;
-//						syllables++;
-//					}
-					preVowel = true;
-					syllables++;
-				}
+			if (i == cArray.length - 1 && c == 'e' && newSyllable && numSyllables > 0)
+				numSyllables--;
+
+			if (newSyllable && vowels.indexOf(c) >= 0) {
+				newSyllable = false;
+				numSyllables++;
+
 			} else {
-				preVowel = false;
+				newSyllable = true;
 			}
 		}
 
-	    return syllables;
+		return numSyllables;
 	}
 
-	private boolean isVowel(char c) {
-		return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' | c == 'y');
-	}
 	
 	/** A method for testing
 	 * 
@@ -158,9 +150,9 @@ public abstract class Document {
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-		return text.length();
+		return 206.835 - 1.015 * (getNumWords() / getNumSentences()) -
+		       84.6 * (getNumSyllables() / getNumWords());
 	}
 	
-	
-	
+
 }
