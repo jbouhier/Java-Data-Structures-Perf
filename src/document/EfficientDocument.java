@@ -11,13 +11,15 @@ import java.util.List;
  */
 public class EfficientDocument extends Document {
 
-	private int numWords;  // The number of words in the document
-	private int numSentences;  // The number of sentences in the document
-	private int numSyllables;  // The number of syllables in the document
+	private int numWords;
+	private int numSentences;
+	private int numSyllables;
 	
-	public EfficientDocument(String text)
-	{
+	public EfficientDocument(String text) {
 		super(text);
+		numWords = 0;
+		numSentences = 0;
+		numSyllables = 0;
 		processText();
 	}
 	
@@ -31,8 +33,7 @@ public class EfficientDocument extends Document {
 	 * @param tok The string to check
 	 * @return true if tok is a word, false if it is punctuation. 
 	 */
-	private boolean isWord(String tok)
-	{
+	private boolean isWord(String tok) {
 	    // Note: This is a fast way of checking whether a string is a word
 	    // You probably don't want to change it.
 		return !(tok.indexOf("!") >=0 || tok.indexOf(".") >=0 || tok.indexOf("?")>=0);
@@ -43,18 +44,7 @@ public class EfficientDocument extends Document {
      * and sentences, and set the member variables appropriately.
      * Words, sentences and syllables are defined as described below. 
      */
-	private void processText()
-	{
-		// Call getTokens on the text to preserve separate strings that are
-		// either words or sentence-ending punctuation.  Ignore everything
-		// That is not a word or a sentence-ending puctuation.
-		// MAKE SURE YOU UNDERSTAND THIS LINE BEFORE YOU CODE THE REST
-		// OF THIS METHOD.
-
-		numWords = 0;
-		numSentences = 0;
-		numSyllables = 0;
-
+	private void processText() {
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
 
 		for (String str : tokens)
@@ -128,10 +118,8 @@ public class EfficientDocument extends Document {
         return numSyllables;
 	}
 	
-	// Can be used for testing
-	// We encourage you to add your own tests here.
-	public static void main(String[] args)
-	{
+	// Can be used for testing, add your own tests here.
+	public static void main(String[] args) {
 	    testCase(new EfficientDocument("This is a test.  How many???  "
                 + "Senteeeeeeeeeences are here... there should be 5!  Right?"),
                 16, 13, 5);
