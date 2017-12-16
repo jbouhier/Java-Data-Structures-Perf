@@ -63,8 +63,6 @@ public abstract class Document {
 	 *       You should consider y a vowel.
 	 */
 	protected int countSyllables(String word) {
-		// TODO: EfficientDocument (module 3).
-
 		int numSyllables = 0;
 		boolean newSyllable = true;
 		String vowels = "aeiouy";
