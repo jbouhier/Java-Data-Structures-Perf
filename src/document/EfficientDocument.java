@@ -1,5 +1,6 @@
 package document;
 
+import java.util.Iterator;
 import java.util.List;
 
 /** 
@@ -46,15 +47,19 @@ public class EfficientDocument extends Document {
      */
 	private void processText() {
 		List<String> tokens = getTokens("[!?.]+|[a-zA-Z]+");
+		Iterator iter = tokens.iterator();
 
-		for (String str : tokens)
-		{
+		while (iter.hasNext()) {
+			String str = (String)iter.next();
+
 			if (isWord(str)) {
 				numWords++;
 				numSyllables += countSyllables(str);
-			}
-			else
+			} else
 				numSentences++;
+
+			if (!iter.hasNext())
+				numSentences += isWord(str) ? 1 : 0;
 		}
 	}
 
