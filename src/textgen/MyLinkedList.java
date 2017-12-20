@@ -33,19 +33,13 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		if (element == null) {
 			throw new NullPointerException();
 		}
-
-		// New Node
+		
 		LLNode<E> newNode = new LLNode<E>(element);
-
-		// Set new node 'next' & 'prev' references
 		newNode.next = tail;
 		newNode.prev = tail.prev;
-
-		// Update latest node 'next' reference
-		tail.prev.next = newNode;
-
-		// Update tail 'prev' reference
-		tail.prev = newNode;
+		newNode.prev.next = newNode;
+		newNode.next.prev = newNode;
+		size++;
 
 		return true;
 	}
