@@ -21,23 +21,40 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		LLNode<E> tail = new LLNode<E>();
 		head.next = tail;
 		tail.prev = head;
+		size = 0;
 	}
 
 	/**
 	 * Appends an element to the end of the list
 	 * @param element The element to add
 	 */
-	public boolean add(E element ) 
+	public boolean add(E element)
 	{
-		// TODO: Implement this method
-		return false;
+		if (element == null) {
+			throw new NullPointerException();
+		}
+
+		// New Node
+		LLNode<E> newNode = new LLNode<E>(element);
+
+		// Set new node 'next' & 'prev' references
+		newNode.next = tail;
+		newNode.prev = tail.prev;
+
+		// Update latest node 'next' reference
+		tail.prev.next = newNode;
+
+		// Update tail 'prev' reference
+		tail.prev = newNode;
+
+		return true;
 	}
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
 	public E get(int index)
 	{
-		if (index > size - 1 || index < 0) {
+		if (size == 0 || index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
 
