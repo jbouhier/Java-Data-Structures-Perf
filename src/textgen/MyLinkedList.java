@@ -17,8 +17,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
 		// Sentinels
-		LLNode<E> head = new LLNode<E>();
-		LLNode<E> tail = new LLNode<E>();
+		head = new LLNode<>();
+		tail = new LLNode<>();
 		head.next = tail;
 		tail.prev = head;
 		size = 0;
@@ -33,12 +33,12 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		if (element == null) {
 			throw new NullPointerException();
 		}
-		
-		LLNode<E> newNode = new LLNode<E>(element);
-		newNode.next = tail;
-		newNode.prev = tail.prev;
-		newNode.prev.next = newNode;
-		newNode.next.prev = newNode;
+
+		LLNode<E> n = new LLNode<>(element);
+		n.next = tail;
+		n.prev = tail.prev;
+		n.prev.next = n;
+		n.next.prev = n;
 		size++;
 
 		return true;
@@ -66,7 +66,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @param The index where the element should be added
 	 * @param element The element to add
 	 */
-	public void add(int index, E element ) 
+	public void add(int index, E element )
 	{
 		// TODO: Implement this method
 	}
