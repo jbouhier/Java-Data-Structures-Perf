@@ -63,10 +63,10 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
 	/**
 	 * Add an element to the list at the specified index
-	 * @param The index where the element should be added
+	 * @param index index where the element should be added
 	 * @param element The element to add
 	 */
-	public void add(int index, E element )
+	public void add(int index, E element)
 	{
 		// TODO: Implement this method
 	}
