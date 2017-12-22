@@ -65,14 +65,14 @@ public class MyLinkedListTester {
 	/** Test removing an element from the list.
 	 * We've included the example from the concept challenge.
 	 * You will want to add more tests.  */
-	@Test
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testRemove() {
 		int a = list1.remove(0);
 		assertEquals("Remove: check a is correct ", 65, a);
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
-
-		// TODO: Add more tests here
+		list1.remove(42);
+		list1.remove(42);
 	}
 
 	/** Test adding an element into the end of the list, specifically
