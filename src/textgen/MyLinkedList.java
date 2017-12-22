@@ -88,23 +88,20 @@ public class MyLinkedList<E> extends AbstractList<E> {
 			throw new IndexOutOfBoundsException();
 		}
 
-		LLNode<E> currNode;
+		LLNode<E> node;
+		node = head;
 
-		if (index < size / 2) {
-			currNode = head;
-			for (int i = 0; i < index; i++) {
-				currNode = currNode.next;
-			}
-		} else {
-			currNode = tail;
-			for (int i = size - 1; i > index; i--) {
-				currNode = currNode.prev;
-			}
+		for (int i = 0; i <= index; i++) {
+			node = node.next;
 		}
 
-		// TODO: Update currNode, currNode.prev & currNode.next references
+		node.prev.next = node.next;
+		node.next.prev = node.prev;
+		E data = node.data;
+		node = null;
+		size--;
 
-		return currNode.data;
+		return data;
 	}
 
 	/**
