@@ -54,7 +54,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		}
 
 		LLNode<E> n = new LLNode<>(element);
-		LLNode<E> prevNode = head.next;
+		LLNode<E> prevNode = head;
 
 		for (int i = 0; i < index; i++) {
 			prevNode = prevNode.next;
@@ -87,8 +87,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	/** Return the size of the list */
 	public int size() 
 	{
-		// TODO: Implement this method
-		return -1;
+		return size;
 	}
 
 	/** Remove a node at the specified index and return its data element.
