@@ -82,10 +82,28 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddEnd()
 	{
-        // TODO: implement this test
+		try {
+			shortList.add(null);
+			fail();
+		} catch (NullPointerException e) {}
+
+		try {
+			shortList.add(42, "X");
+			fail();
+		} catch (IndexOutOfBoundsException e) {}
 
 	}
 
+	/** Test adding an element into the list at a specified index,
+	 * specifically:
+	 * public void add(int index, E element)
+	 * */
+	@Test
+	public void testAddAtIndex()
+	{
+		// TODO: implement this test
+
+	}
 
 	/** Test the size of the list */
 	@Test
@@ -96,16 +114,7 @@ public class MyLinkedListTester {
 
 
 
-	/** Test adding an element into the list at a specified index,
-	 * specifically:
-	 * public void add(int index, E element)
-	 * */
-	@Test
-	public void testAddAtIndex()
-	{
-        // TODO: implement this test
 
-	}
 
 	/** Test setting an element in the list */
 	@Test
