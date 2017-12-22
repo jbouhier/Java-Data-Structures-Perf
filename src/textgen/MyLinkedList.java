@@ -127,7 +127,23 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		node.data = element;
 
 		return data;
-	}   
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		LLNode<E> node = head.next;
+
+		for (int i = 0; i < size; i++) {
+			if (i != size - 1)
+				sb.append(node.toString()).append("\n");
+			else
+				sb.append(node.toString());
+			node = node.next;
+		}
+
+		return sb.toString();
+	}
 }
 
 class LLNode<E> {
@@ -136,13 +152,17 @@ class LLNode<E> {
 	E data;
 
 	public LLNode() {
-		this.prev = null;
-		this.next = null;
+		this(null);
 	}
 
 	public LLNode(E e) {
 		this.data = e;
 		this.prev = null;
 		this.next = null;
+	}
+
+	@Override
+	public String toString() {
+		return data.toString();
 	}
 }
