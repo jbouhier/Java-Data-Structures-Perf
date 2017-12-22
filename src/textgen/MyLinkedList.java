@@ -34,8 +34,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws NullPointerException if the element is null
 	 * @throws IndexOutOfBoundsException if the index isn't between 0 & LinkedList max
 	 */
-	public void add(int index, E element)
-	{
+	public void add(int index, E element) {
 		if (element == null) {
 			throw new NullPointerException();
 		} else if (index < 0 || index > size) {
@@ -84,10 +83,28 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
 	 * 
 	 */
-	public E remove(int index) 
-	{
-		// TODO: Implement this method
-		return null;
+	public E remove(int index) {
+		if (size == 0 || index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+
+		LLNode<E> currNode;
+
+		if (index < size / 2) {
+			currNode = head;
+			for (int i = 0; i < index; i++) {
+				currNode = currNode.next;
+			}
+		} else {
+			currNode = tail;
+			for (int i = size - 1; i > index; i--) {
+				currNode = currNode.prev;
+			}
+		}
+
+		// TODO: Update currNode, currNode.prev & currNode.next references
+
+		return currNode.data;
 	}
 
 	/**
