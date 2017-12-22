@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.LinkedList;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -79,19 +80,14 @@ public class MyLinkedListTester {
 	/** Test adding an element into the end of the list, specifically
 	 *  public boolean add(E element)
 	 * */
-	@Test
-	public void testAddEnd()
-	{
-		try {
-			shortList.add(null);
-			fail();
-		} catch (NullPointerException e) {}
-
-		try {
-			shortList.add(42, "X");
-			fail();
-		} catch (IndexOutOfBoundsException e) {}
-
+	@Test(expected = NullPointerException.class)
+	public void testAddEnd() {
+		shortList.add(null);
+		assertEquals("Adding 'null' shouldn't change LinkedList", 2, shortList.size());
+		assertEquals("Index 1 should equal to the value 'B'", "B", shortList.get(1));
+		shortList.add("Plop");
+		assertEquals("Adding one object", 3, shortList.size());
+		assertEquals("Index 2 should equal to the value 'Plop'", "Plop", shortList.get(2));
 	}
 
 	/** Test adding an element into the list at a specified index,
@@ -101,8 +97,25 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddAtIndex()
 	{
-		// TODO: implement this test
+		try {
+			shortList.add(1, null);
+			fail();
+		} catch (NullPointerException e) {}
 
+		try {
+			shortList.add(42, "X");
+			fail();
+		} catch (IndexOutOfBoundsException e) {}
+
+		try {
+			shortList.add(-21, "Z");
+			fail();
+		} catch (IndexOutOfBoundsException e) {}
+
+		assertEquals("shortList size is 0", 2, shortList.size());
+		shortList.add(0, "Meh");
+		assertEquals("shortList size is 3", 3, shortList.size());
+		assertEquals("index 0 of shortList is 'Meh'", "Meh", shortList.get(0));
 	}
 
 	/** Test the size of the list */
