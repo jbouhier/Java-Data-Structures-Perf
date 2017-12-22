@@ -42,8 +42,7 @@ public class MyLinkedListTester {
 
 
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void testGet()
-	{
+	public void testGet() {
 		emptyList.get(0);
 
 		// test short list, first contents, then out of bounds
@@ -66,16 +65,15 @@ public class MyLinkedListTester {
 	/** Test removing an element from the list.
 	 * We've included the example from the concept challenge.
 	 * You will want to add more tests.  */
-//	@Test
-//	public void testRemove()
-//	{
-//		int a = list1.remove(0);
-//		assertEquals("Remove: check a is correct ", 65, a);
-//		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
-//		assertEquals("Remove: check size is correct ", 2, list1.size());
-//
-//		// TODO: Add more tests here
-//	}
+	@Test
+	public void testRemove() {
+		int a = list1.remove(0);
+		assertEquals("Remove: check a is correct ", 65, a);
+		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
+		assertEquals("Remove: check size is correct ", 2, list1.size());
+
+		// TODO: Add more tests here
+	}
 
 	/** Test adding an element into the end of the list, specifically
 	 *  public boolean add(E element)
@@ -95,8 +93,7 @@ public class MyLinkedListTester {
 	 * public void add(int index, E element)
 	 * */
 	@Test
-	public void testAddAtIndex()
-	{
+	public void testAddAtIndex() {
 		try {
 			shortList.add(1, null);
 			fail();
@@ -124,9 +121,6 @@ public class MyLinkedListTester {
 	{
 		// TODO: implement this test
 	}
-
-
-
 
 
 	/** Test setting an element in the list */
