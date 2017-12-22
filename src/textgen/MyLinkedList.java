@@ -22,19 +22,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * Appends an element to the end of the list
 	 * @param element The element to add
 	 */
-	public boolean add(E element)
-	{
-		if (element == null) {
-			throw new NullPointerException();
-		}
-
-		LLNode<E> n = new LLNode<>(element);
-		n.next = tail;
-		n.prev = tail.prev;
-		n.prev.next = n;
-		n.next.prev = n;
-		size++;
-
+	public boolean add(E element) {
+		add(size, element);
 		return true;
 	}
 
@@ -49,7 +38,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	{
 		if (element == null) {
 			throw new NullPointerException();
-		} else if (index < 0 || index > size - 1) {
+		} else if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
 		}
 
@@ -85,8 +74,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	/** Return the size of the list */
-	public int size() 
-	{
+	public int size() {
 		return size;
 	}
 
