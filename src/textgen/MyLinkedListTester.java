@@ -20,41 +20,55 @@ public class MyLinkedListTester {
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
-	    shortList = new MyLinkedList<String>();
+	public void setUp() {
+		emptyList  =  new MyLinkedList<Integer>();
+		shortList  =  new MyLinkedList<String>();
+		list1      =  new MyLinkedList<Integer>();
+		longerList =  new MyLinkedList<Integer>();
+
 		shortList.add("A");
 		shortList.add("B");
-		emptyList = new MyLinkedList<Integer>();
-		longerList = new MyLinkedList<Integer>();
+		list1.add(65);
+		list1.add(21);
+		list1.add(42);
 
 		for (int i = 0; i < LONG_LIST_LENGTH; i++) {
 			longerList.add(i);
 		}
-
-		list1 = new MyLinkedList<Integer>();
-		list1.add(65);
-		list1.add(21);
-		list1.add(42);
 	}
 
-	@Test(expected = IndexOutOfBoundsException.class)
+	@Test
 	public void testGet() {
-		emptyList.get(0);
+		// Empty list
+		try {
+			emptyList.get(0);
+		} catch (IndexOutOfBoundsException e) {}
 
-		// test short list, first contents, then out of bounds
+		// Short list, first contents, then out of bounds
 		assertEquals("Check first", "A", shortList.get(0));
 		assertEquals("Check second", "B", shortList.get(1));
-		shortList.get(-1);
-		shortList.get(2);
 
-		// test longer list contents
+		try {
+			shortList.get(-1);
+		} catch (IndexOutOfBoundsException e) {}
+
+		try {
+			shortList.get(2);
+		} catch (IndexOutOfBoundsException e) {}
+
+		// Longer list contents
 		for (int i = 0; i < LONG_LIST_LENGTH; i++) {
 			assertEquals("Check " + i + " element", (Integer)i, longerList.get(i));
 		}
 		
 		// test off the end of the longer array
-		longerList.get(-1);
-		longerList.get(LONG_LIST_LENGTH);
+		try {
+			longerList.get(-1);
+		} catch (IndexOutOfBoundsException e) {}
+
+		try {
+			longerList.get(LONG_LIST_LENGTH);
+		} catch (IndexOutOfBoundsException e) {}
 	}
 
 	/** Test removing an element from the list.
@@ -66,7 +80,6 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check a is correct ", 65, a);
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
-		list1.remove(42);
 		list1.remove(42);
 	}
 
@@ -113,7 +126,13 @@ public class MyLinkedListTester {
 	/** Test the size of the list */
 	@Test
 	public void testSize() {
-		// TODO: implement this test
+		// Initial size
+		assertEquals("emptyList.size = 0", (Integer)0, (Integer)emptyList.size());
+		assertEquals("shortList.size = 2", (Integer)2, (Integer)shortList.size());
+		assertEquals("list1.size = 3", (Integer)3, (Integer)list1.size());
+		assertEquals("longerList.size = 3", (Integer)LONG_LIST_LENGTH, (Integer)longerList.size());
+		// Size after add
+		// Size after remove
 	}
 
 	/** Test setting an element in the list */
@@ -140,6 +159,21 @@ public class MyLinkedListTester {
 		assertEquals("list1[1] = 21", (Integer)21, list1.get(1));
 	}
 
-	// TODO: Optionally add more test methods.
+	@Test
+	public void testToString() {
+		assertEquals("emptyList.toString", "", emptyList.toString());
+		assertEquals("shortList.toString", "A\nB", shortList.toString());
+		assertEquals("list1.toString", "65\n21\n42", list1.toString());
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < LONG_LIST_LENGTH; i++) {
+			if (i != LONG_LIST_LENGTH - 1)
+				sb.append(i).append("\n");
+			else
+				sb.append(i);
+		}
+		String listStr = sb.toString();
+		assertEquals("longerList.toString", listStr, longerList.toString());
+	}
 	
 }
