@@ -1,6 +1,3 @@
-/**
- * 
- */
 package textgen;
 
 import static org.junit.Assert.*;
@@ -10,10 +7,7 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * @author UC San Diego MOOC team
- *
- */
+
 public class MyLinkedListTester {
 
 	private static final int LONG_LIST_LENGTH = 10;
@@ -24,6 +18,7 @@ public class MyLinkedListTester {
 	MyLinkedList<Integer> list1;
 	
 	/**
+	 * Run before each @Test method
 	 * @throws java.lang.Exception
 	 */
 	@Before
@@ -45,56 +40,25 @@ public class MyLinkedListTester {
 	}
 
 
-	@Test
+	@Test(expected = IndexOutOfBoundsException.class)
 	public void testGet()
 	{
-		//test empty list, get should throw an exception
-		try {
-			emptyList.get(0);
-			fail("Check out of bounds");
-		}
-		catch (IndexOutOfBoundsException e) {
+		emptyList.get(0);
 
-		}
-		
 		// test short list, first contents, then out of bounds
 		assertEquals("Check first", "A", shortList.get(0));
 		assertEquals("Check second", "B", shortList.get(1));
-		
-		try {
-			shortList.get(-1);
-			fail("Check out of bounds");
-		}
-		catch (IndexOutOfBoundsException e) {
-		
-		}
-		try {
-			shortList.get(2);
-			fail("Check out of bounds");
-		}
-		catch (IndexOutOfBoundsException e) {
-		
-		}
+		shortList.get(-1);
+		shortList.get(2);
+
 		// test longer list contents
 		for (int i = 0; i < LONG_LIST_LENGTH; i++) {
 			assertEquals("Check " + i + " element", (Integer)i, longerList.get(i));
 		}
 		
 		// test off the end of the longer array
-		try {
-			longerList.get(-1);
-			fail("Check out of bounds");
-		}
-		catch (IndexOutOfBoundsException e) {
-		
-		}
-		try {
-			longerList.get(LONG_LIST_LENGTH);
-			fail("Check out of bounds");
-		}
-		catch (IndexOutOfBoundsException e) {
-		}
-		
+		longerList.get(-1);
+		longerList.get(LONG_LIST_LENGTH);
 	}
 	
 
