@@ -40,7 +40,6 @@ public class MyLinkedListTester {
 		list1.add(42);
 	}
 
-
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void testGet() {
 		emptyList.get(0);
@@ -60,7 +59,6 @@ public class MyLinkedListTester {
 		longerList.get(-1);
 		longerList.get(LONG_LIST_LENGTH);
 	}
-	
 
 	/** Test removing an element from the list.
 	 * We've included the example from the concept challenge.
@@ -121,7 +119,6 @@ public class MyLinkedListTester {
 		// TODO: implement this test
 	}
 
-
 	/** Test setting an element in the list */
 	@Test
 	public void testSet() {
@@ -146,7 +143,6 @@ public class MyLinkedListTester {
 		assertEquals("list1[1] = 21", (Integer)21, list1.get(1));
 	}
 
-	
 	// TODO: Optionally add more test methods.
 	
 }
