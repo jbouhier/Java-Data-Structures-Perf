@@ -117,18 +117,33 @@ public class MyLinkedListTester {
 
 	/** Test the size of the list */
 	@Test
-	public void testSize()
-	{
+	public void testSize() {
 		// TODO: implement this test
 	}
 
 
 	/** Test setting an element in the list */
 	@Test
-	public void testSet()
-	{
-	    // TODO: implement this test
+	public void testSet() {
+		try {
+			list1.set(0,  null);
+			fail();
+		} catch (NullPointerException e) {}
 
+		try {
+			list1.set(-2,  -2);
+			fail();
+		} catch (IndexOutOfBoundsException e) {}
+
+		try {
+			list1.set(55,  55);
+			fail();
+		} catch (IndexOutOfBoundsException e) {}
+
+		assertEquals("list1[0] = 65", (Integer)65, list1.get(0));
+		list1.set(0, 42);
+		assertEquals("list1[0] = 42", (Integer)42, list1.get(0));
+		assertEquals("list1[1] = 21", (Integer)21, list1.get(1));
 	}
 
 	
