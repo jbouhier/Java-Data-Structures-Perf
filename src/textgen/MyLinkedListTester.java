@@ -161,19 +161,10 @@ public class MyLinkedListTester {
 
 	@Test
 	public void testToString() {
-		assertEquals("emptyList.toString", "", emptyList.toString());
-		assertEquals("shortList.toString", "A\nB", shortList.toString());
-		assertEquals("list1.toString", "65\n21\n42", list1.toString());
-
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < LONG_LIST_LENGTH; i++) {
-			if (i != LONG_LIST_LENGTH - 1)
-				sb.append(i).append("\n");
-			else
-				sb.append(i);
-		}
-		String listStr = sb.toString();
-		assertEquals("longerList.toString", listStr, longerList.toString());
+		assertEquals("emptyList.toString = \"\"", "", emptyList.toString());
+		assertEquals("shortList.toString", "A, B", shortList.toString());
+		assertEquals("list1.toString", "65, 21, 42", list1.toString());
+		assertEquals("longerList.toString...", "0, 1, 2, 3, 4, 5, 6, 7, 8, 9", longerList.toString());
 	}
 	
 }

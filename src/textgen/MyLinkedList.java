@@ -83,7 +83,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * 
 	 */
 	public E remove(int index) {
-		if (size == 0 || index < 0 || index > size) {
+		if (size == 0 || index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
 
@@ -136,7 +136,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
 		for (int i = 0; i < size; i++) {
 			if (i != size - 1)
-				sb.append(node.toString()).append("\n");
+				sb.append(node.toString()).append(", ");
 			else
 				sb.append(node.toString());
 			node = node.next;
@@ -163,6 +163,7 @@ class LLNode<E> {
 
 	@Override
 	public String toString() {
+		if (data == null) return "";
 		return data.toString();
 	}
 }
