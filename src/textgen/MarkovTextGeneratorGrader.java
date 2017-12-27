@@ -32,7 +32,10 @@ public class MarkovTextGeneratorGrader {
                 feedback += "Error thrown. ";
             }
 
-            String input = "I love cats. I hate dogs. I I I I I I I I I I I I I I I I love cats. I I I I I I I I I I I I I I I I hate dogs. I I I I I I I I I like books. I love love. I am a text generator. I love cats. I love cats. I love cats. I love love love socks.";
+            String input = "I love cats. I hate dogs. I I I I I I I I I I I I I I I I love " +
+					"cats. I I I I I I I I I I I I I I I I hate dogs. I I I I I I I I I like " +
+					"books. I love love. I am a text generator. I love cats. I love cats. I love " +
+					"cats. I love love love socks.";
             gen.retrain(input);
             String res = gen.generateText(LENGTH);
 
