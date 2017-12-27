@@ -6,7 +6,7 @@ import java.util.AbstractList;
 public class MyLinkedList<E> extends AbstractList<E> {
 	LLNode<E> head;
 	LLNode<E> tail;
-	int size;
+	private int size;
 
 	/** Create a new empty LinkedList */
 	public MyLinkedList() {
@@ -22,6 +22,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * Appends an element to the end of the list
 	 * @param element The element to add
 	 */
+	@Override
 	public boolean add(E element) {
 		add(size, element);
 		return true;
@@ -34,6 +35,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws NullPointerException if the element is null
 	 * @throws IndexOutOfBoundsException if the index isn't between 0 & LinkedList max
 	 */
+	@Override
 	public void add(int index, E element) {
 		if (element == null) {
 			throw new NullPointerException();
@@ -82,6 +84,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @throws IndexOutOfBoundsException If index is outside the bounds of the list
 	 * 
 	 */
+	@Override
 	public E remove(int index) {
 		if (size == 0 || index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
@@ -110,10 +113,11 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 * @return The element that was replaced
 	 * @throws IndexOutOfBoundsException if the index is out of bounds.
 	 */
+	@Override
 	public E set(int index, E element) {
 		if (element == null) {
 			throw new NullPointerException();
-		} else if (index < 0 || index > size) {
+		} else if (index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
 
