@@ -15,6 +15,9 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	
 	// The starting "word"
 	private String starter;
+
+	// The previous "word
+	private String prevWord;
 	
 	// The random number generator
 	private Random rnGenerator;
@@ -54,9 +57,22 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	{
 		ArrayList<String> textArr = cutText(sourceText);
 
+		starter = textArr.get(0);
+		prevWord = starter;
+
+		// Must start at index 1 (use iterator)
 		for (String word : textArr) {
-			System.out.println(word);
+			for (ListNode list : wordList) {
+				if (list.getWord().equals(prevWord)) {
+					// Continue...
+				}
+			}
 		}
+
+		// Debug
+//		for (String word : textArr) {
+//			System.out.println(word);
+//		}
 	}
 	
 	/** 
