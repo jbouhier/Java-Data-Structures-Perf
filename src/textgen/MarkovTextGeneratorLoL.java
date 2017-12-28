@@ -1,9 +1,8 @@
 package textgen;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Random;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** 
  * An implementation of the MTG interface that uses a list of lists.
@@ -19,20 +18,45 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	
 	// The random number generator
 	private Random rnGenerator;
+
+
 	
-	public MarkovTextGeneratorLoL(Random generator)
-	{
+	public MarkovTextGeneratorLoL(Random generator) {
 		wordList = new LinkedList<ListNode>();
 		starter = "";
 		rnGenerator = generator;
 	}
-	
-	
-	/** Train the generator by adding the sourceText */
+
+	private ArrayList<String> cutText(String text) {
+		ArrayList<String> tokens = new ArrayList<String>();
+		Pattern tokSplitter = Pattern.compile("[!?.]+|[a-zA-Z]+");
+		Matcher m = tokSplitter.matcher(text);
+
+		while (m.find())
+			tokens.add(m.group());
+
+		Iterator iter = tokens.iterator();
+
+		while (iter.hasNext())
+			if (!isWord((String) iter.next())) iter.remove();
+
+		return tokens;
+	}
+
+
+	private boolean isWord(String tok) {
+		return !(tok.indexOf("!") >= 0 || tok.indexOf(".") >= 0 || tok.indexOf("?") >= 0);
+	}
+
+
 	@Override
 	public void train(String sourceText)
 	{
-		// TODO: Implement this method
+		ArrayList<String> textArr = cutText(sourceText);
+
+		for (String word : textArr) {
+			System.out.println(word);
+		}
 	}
 	
 	/** 
