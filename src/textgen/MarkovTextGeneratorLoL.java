@@ -59,14 +59,23 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
 		starter = textArr.get(0);
 		prevWord = starter;
+		Iterator iter = textArr.listIterator(1); // Start at 2nd word
 
-		// Must start at index 1 (use iterator)
-		for (String word : textArr) {
+		while (iter.hasNext()) {
+			String word = (String)iter.next();
+
 			for (ListNode list : wordList) {
 				if (list.getWord().equals(prevWord)) {
-					// Continue...
+					list.addNextWord(prevWord);
+				} else {
+					wordList.add(new ListNode("word"));
+
 				}
 			}
+
+
+
+			prevWord = word;
 		}
 
 		// Debug
