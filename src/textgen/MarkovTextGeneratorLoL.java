@@ -40,9 +40,10 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
 		Iterator iter = tokens.iterator();
 
-		while (iter.hasNext())
-			if (!isWord((String) iter.next())) iter.remove();
-
+		while (iter.hasNext()) {
+			if (!isWord( (String)iter.next() ))
+				iter.remove();
+		}
 		return tokens;
 	}
 
@@ -53,35 +54,31 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
 
 	@Override
-	public void train(String sourceText)
-	{
+	public void train(String sourceText) {
 		ArrayList<String> textArr = cutText(sourceText);
 
 		starter = textArr.get(0);
 		prevWord = starter;
-		Iterator iter = textArr.listIterator(1); // Start at 2nd word
+		Iterator iter = textArr.listIterator(1);
 
 		while (iter.hasNext()) {
 			String word = (String)iter.next();
 
 			for (ListNode list : wordList) {
 				if (list.getWord().equals(prevWord)) {
-					list.addNextWord(prevWord);
+					list.addNextWord(word);
+					break;
 				} else {
-					wordList.add(new ListNode("word"));
-
+					ListNode prevNode = new ListNode(prevWord);
+					wordList.add(prevNode);
+					wordList.get(wordList.indexOf(prevNode)).addNextWord(word);
 				}
 			}
-
-
-
 			prevWord = word;
 		}
 
-		// Debug
-//		for (String word : textArr) {
-//			System.out.println(word);
-//		}
+		if (!wordList.isEmpty())
+			wordList.get(wordList.size() - 1).addNextWord(starter);
 	}
 	
 	/** 
@@ -96,14 +93,13 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	
 	// Can be helpful for debugging
 	@Override
-	public String toString()
-	{
-		String toReturn = "";
+	public String toString() {
+		StringBuilder toReturn = new StringBuilder();
+
 		for (ListNode n : wordList)
-		{
-			toReturn += n.toString();
-		}
-		return toReturn;
+			toReturn.append(n.toString());
+
+		return toReturn.toString();
 	}
 	
 	/** Retrain the generator from scratch on the source text */
@@ -196,14 +192,16 @@ class ListNode
 	    return null;
 	}
 
-	public String toString()
-	{
-		String toReturn = word + ": ";
+	public String toString() {
+		StringBuilder toReturn = new StringBuilder(word + ": ");
+
 		for (String s : nextWords) {
-			toReturn += s + "->";
+			toReturn.append(s);
+			toReturn.append("->");
 		}
-		toReturn += "\n";
-		return toReturn;
+
+		toReturn.append("\n");
+		return toReturn.toString();
 	}
 	
 }
