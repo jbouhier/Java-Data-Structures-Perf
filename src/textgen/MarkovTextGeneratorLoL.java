@@ -24,26 +24,33 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
 	@Override
 	public void train(String sourceText) {
-		ArrayList<String> textArr = cutText(sourceText);
-		starter = textArr.get(0);
+		if (isEmpty(sourceText)) return;
+
+		String[] textArr = sourceText.split(" +");
+		starter = textArr[0];
 		wordList.add(new ListNode(starter));
 		String prevWord = starter;
 
-		for (int i = 1; i < textArr.size(); i++) {
-			String word = textArr.get(i);
+		for (int i = 1; i < textArr.length; i++) {
+			String word = textArr[i];
 			wordListAlgo(word, prevWord);
 			prevWord = word;
 		}
 
-		ListNode lastNode = new ListNode(textArr.get(textArr.size() - 1));
+		ListNode lastNode = new ListNode(textArr[textArr.length - 1]);
 		lastNode.addNextWord(starter);
 		wordList.add(lastNode);
 	}
 
 
-	/** 
-	 * Generate the number of words requested.
-	 */
+	@Override
+	public void retrain(String sourceText) {
+		wordList.clear();
+		starter = "";
+		train(sourceText);
+	}
+
+
 	@Override
 	public String generateText(int numWords) {
 		if (numWords <= 0 || starter.equals("") || wordList.isEmpty())
@@ -75,7 +82,6 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	}
 
 
-	// Can be helpful for debugging
 	@Override
 	public String toString() {
 		StringBuilder toReturn = new StringBuilder();
@@ -86,35 +92,6 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		return toReturn.toString();
 	}
 
-
-	/** Retrain the generator from scratch on the source text */
-	@Override
-	public void retrain(String sourceText) {
-		wordList.clear();
-		train(sourceText);
-	}
-
-
-	private ArrayList<String> cutText(String text) {
-		ArrayList<String> tokens = new ArrayList<String>();
-		Pattern tokSplitter = Pattern.compile("[!?.]+|[a-zA-Z]+");
-		Matcher m = tokSplitter.matcher(text);
-
-		while (m.find())
-			tokens.add(m.group());
-
-		Iterator iter = tokens.iterator();
-
-		while (iter.hasNext()) {
-			if (!isWord( (String)iter.next() ))
-				iter.remove();
-		}
-		return tokens;
-	}
-
-	private boolean isWord(String tok) {
-		return !(tok.indexOf("!") >= 0 || tok.indexOf(".") >= 0 || tok.indexOf("?") >= 0);
-	}
 
 	private void wordListAlgo(String word, String prevWord) {
 		ListNode newWord = null;
@@ -136,11 +113,11 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	}
 
 
-	/**
-	 * This is a minimal set of tests.  Note that it can be difficult
-	 * to test methods/classes with randomized behavior.   
-	 * @param args
-	 */
+	private boolean isEmpty(String s) {
+		return (s == null || s.isEmpty());
+	}
+
+
 	public static void main(String[] args) {
 		// feed the generator a fixed random value for repeatable behavior
 		MarkovTextGeneratorLoL gen = new MarkovTextGeneratorLoL(new Random(42));
@@ -181,6 +158,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	}
 
 }
+
 
 /** Links a word to the next words in the list 
  * You should use this class in your implementation. */
