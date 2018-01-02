@@ -59,6 +59,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 
 	/** Get the element at position index 
 	 * @throws IndexOutOfBoundsException if the index is out of bounds. */
+	@Override
 	public E get(int index) {
 		if (size == 0 || index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
@@ -74,6 +75,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	}
 
 	/** Return the size of the list */
+	@Override
 	public int size() {
 		return size;
 	}
@@ -117,7 +119,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	public E set(int index, E element) {
 		if (element == null) {
 			throw new NullPointerException();
-		} else if (index < 0 || index > size - 1) {
+		} else if (size == 0 || index < 0 || index > size - 1) {
 			throw new IndexOutOfBoundsException();
 		}
 
@@ -149,6 +151,7 @@ public class MyLinkedList<E> extends AbstractList<E> {
 		return sb.toString();
 	}
 }
+
 
 class LLNode<E> {
 	LLNode<E> prev;
