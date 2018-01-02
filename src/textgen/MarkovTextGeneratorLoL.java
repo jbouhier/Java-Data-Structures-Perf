@@ -106,10 +106,10 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 					String rdmWord = node.getRandomNextWord(rnGenerator);
 					output.append(rdmWord);
 					currWord = rdmWord;
-					i++;
 					break;
 				}
 			}
+			i++;
 		}
 
 		return output.toString();
@@ -205,10 +205,7 @@ class ListNode {
 	}
 	
 	public String getRandomNextWord(Random generator) {
-		// TODO: Implement this method
-	    // The random number generator should be passed from 
-	    // the MarkovTextGeneratorLoL class
-	    return null;
+	    return nextWords.get(generator.nextInt(nextWords.size()));
 	}
 
 	public String toString() {
