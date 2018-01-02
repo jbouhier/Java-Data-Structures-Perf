@@ -89,8 +89,30 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	 */
 	@Override
 	public String generateText(int numWords) {
-	    // TODO: Implement this method
-		return null;
+		if (numWords <= 0) return "";
+
+		int i = 0;
+		StringBuilder output = new StringBuilder();
+		String currWord = starter;
+		output.append(currWord);
+		i++;
+
+		while (i < numWords) {
+			for (int j = 0; j < wordList.size(); j++) {
+				ListNode node = wordList.get(j);
+				String nodeWord = node.getWord();
+
+				if (currWord.equals(nodeWord)) {
+					String rdmWord = node.getRandomNextWord(rnGenerator);
+					output.append(rdmWord);
+					currWord = rdmWord;
+					i++;
+					break;
+				}
+			}
+		}
+
+		return output.toString();
 	}
 	
 	// Can be helpful for debugging
@@ -201,7 +223,6 @@ class ListNode {
 		toReturn.append("\n");
 		return toReturn.toString();
 	}
-	
 }
 
 
