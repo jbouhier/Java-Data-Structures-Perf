@@ -1,8 +1,6 @@
 package textgen;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /** 
  * An implementation of the MTG interface that uses a list of lists.
