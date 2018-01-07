@@ -6,36 +6,38 @@ import java.util.TreeSet;
  * @author UC San Diego Intermediate MOOC team
  *
  */
-public class DictionaryBST implements Dictionary 
-{
+public class DictionaryBST implements Dictionary {
+
    private TreeSet<String> dict;
 	
-    // TODO: Implement the dictionary interface using a TreeSet.  
- 	// You'll need a constructor here
-	
-    
-    /** Add this word to the dictionary.  Convert it to lowercase first
-     * for the assignment requirements.
+
+    public DictionaryBST() {
+        dict = new TreeSet<>();
+    }
+
+
+    /**
+     * Add a word to the dictionary. (it wasn't already there).
+     * Convert it to lowercase first.
+     *
      * @param word The word to add
-     * @return true if the word was added to the dictionary 
-     * (it wasn't already there). */
+     * @return true if the word was added to the dictionary
+     */
     public boolean addWord(String word) {
-    	// TODO: Implement this method
-        return false;
+        if (isWord(word)) return false;
+        return dict.add(word.toLowerCase());
     }
 
 
     /** Return the number of words in the dictionary */
-    public int size()
-    {
-    	// TODO: Implement this method
-        return 0;
+    public int size() {
+        return dict.size();
     }
+
 
     /** Is this a word according to this dictionary? */
     public boolean isWord(String s) {
-    	//TODO: Implement this method
-        return false;
+    	return dict.contains(s.toLowerCase());
     }
 
 }
