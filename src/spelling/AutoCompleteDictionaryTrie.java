@@ -4,7 +4,7 @@ import java.util.List;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
- * @author You
+ * @author Jean-Baptiste Bouhier
  *
  */
 public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
@@ -33,8 +33,28 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * in the dictionary.
 	 */
 	public boolean addWord(String word) {
-	    //TODO: Implement this method.
-	    return false;
+		char[]    chars  =  word.toLowerCase().toCharArray();
+		int       len    =  chars.length - 1;
+		TrieNode  n      =  root;
+
+		for (int i = 0; i <= len; i++) {
+			char c = chars[i];
+			TrieNode next = n.getChild(c);
+
+			if (next == null) {
+				n.insert(c);
+				if (i == len) {
+					next.setEndsWord(true);
+					break;
+				}
+				else next.setEndsWord(false);
+			} else if (i == len && next.endsWord()) {
+				return false;
+			}
+
+			n = next;
+		}
+			return true;
 	}
 	
 	/** 
@@ -42,7 +62,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * as the number of TrieNodes in the trie.
 	 */
 	public int size() {
-	    //TODO: Implement this method
 	    return 0;
 	}
 	

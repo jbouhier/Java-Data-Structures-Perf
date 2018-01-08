@@ -32,8 +32,7 @@ class TrieNode {
 	 * @return The TrieNode that character links to, or null if that link
 	 *   is not in the trie.
 	 */
-	public TrieNode getChild(Character c)
-	{
+	public TrieNode getChild(Character c) {
 		return children.get(c);
 	}
 	
