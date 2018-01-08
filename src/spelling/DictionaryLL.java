@@ -23,8 +23,7 @@ public class DictionaryLL implements Dictionary {
      * @return true if the word was added to the dictionary 
      **/
     public boolean addWord(String word) {
-        if (isWord(word)) return false;
-        return dict.add(word.toLowerCase());
+        return !isWord(word) && dict.add(word.toLowerCase());
     }
 
 
