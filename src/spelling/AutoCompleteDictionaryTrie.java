@@ -72,17 +72,13 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		char[]    chars  =  s.toLowerCase().toCharArray();
 		int       len    =  chars.length - 1;
 		TrieNode  n      =  root;
-		TrieNode  next   =  null;
+		TrieNode  next;
 
-		for (int i = 0; i < len; i++) {
+		for (int i = 0; i <= len; i++) {
 			char c = chars[i];
 			next = n.getChild(c);
-
-			if (next == null)
-				return false;
-			else if (i == len - 1)
-				return next.endsWord();
-
+			if (next == null)   break;
+			else if (i == len)  return next.endsWord();
 			n = n.getChild(c);
 		}
 
