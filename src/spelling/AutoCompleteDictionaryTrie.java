@@ -17,7 +17,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		root = new TrieNode();
 	}
 	
-	
 	/** Insert a word into the trie.
 	 * For the basic part of the assignment (part 2), you should convert the 
 	 * string to all lower case before you insert it. 
@@ -32,6 +31,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 * @return true if the word was successfully added or false if it already exists
 	 * in the dictionary.
 	 */
+	@Override
 	public boolean addWord(String word) {
 		char[]    chars  =  word.toLowerCase().toCharArray();
 		int       len    =  chars.length - 1;
@@ -43,34 +43,49 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
 			if (next == null) {
 				n.insert(c);
-				if (i == len) {
-					next.setEndsWord(true);
-					break;
-				}
-				else next.setEndsWord(false);
-			} else if (i == len && next.endsWord()) {
-				return false;
+				n.getChild(c).setEndsWord(i == len);
+				if (i == len) return true;
+			} else if (i == len) {
+				next.setEndsWord(true);
+				return true;
 			}
-
-			n = next;
+			n = n.getChild(c);
 		}
-			return true;
+
+		return false;
 	}
 	
 	/** 
 	 * Return the number of words in the dictionary.  This is NOT necessarily the same
 	 * as the number of TrieNodes in the trie.
 	 */
+	@Override
 	public int size() {
-	    return 0;
+		wordCount(root);
+	    return size;
 	}
-	
-	
+
 	/** Returns whether the string is a word in the trie, using the algorithm
 	 * described in the videos for this week. */
 	@Override
 	public boolean isWord(String s) {
-	    // TODO: Implement this method
+		char[]    chars  =  s.toLowerCase().toCharArray();
+		int       len    =  chars.length - 1;
+		TrieNode  n      =  root;
+		TrieNode  next   =  null;
+
+		for (int i = 0; i < len; i++) {
+			char c = chars[i];
+			next = n.getChild(c);
+
+			if (next == null)
+				return false;
+			else if (i == len - 1)
+				return next.endsWord();
+
+			n = n.getChild(c);
+		}
+
 		return false;
 	}
 
@@ -94,8 +109,9 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
      * @param prefix The text to use at the word stem
      * @param numCompletions The maximum number of predictions desired.
      * @return A list containing the up to numCompletions best predictions
-     */@Override
-     public List<String> predictCompletions(String prefix, int numCompletions) {
+     */
+	@Override
+ 	public List<String> predictCompletions(String prefix, int numCompletions) {
     	 // TODO: Implement this method
     	 // This method should implement the following algorithm:
     	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
@@ -115,15 +131,15 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
      }
 
  	// For debugging
- 	public void printTree()
- 	{
+ 	public void printTree() {
  		printNode(root);
  	}
  	
  	/** Do a pre-order traversal from this node down */
  	public void printNode(TrieNode curr) {
  		if (curr == null) return;
- 		System.out.println(curr.getText());
+		String leaf = curr.endsWord() ? " -- LEAF" : "";
+		System.out.println(curr.getText() + leaf);
  		TrieNode next = null;
 
  		for (Character c : curr.getValidNextCharacters()) {
@@ -131,6 +147,17 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
  			printNode(next);
  		}
  	}
+
+	/** Helper method for size() */
+	private void wordCount(TrieNode curr) {
+		if (curr == null) return;
+		if (curr.endsWord()) size++;
+
+		for (Character c : curr.getValidNextCharacters()) {
+			TrieNode next = curr.getChild(c);
+			if (next != null) wordCount(next);
+		}
+	}
 
 	
 }
