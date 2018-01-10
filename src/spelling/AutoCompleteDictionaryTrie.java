@@ -1,5 +1,7 @@
 package spelling;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /** 
@@ -9,12 +11,17 @@ import java.util.List;
  */
 public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
-    private TrieNode root;
-    private int size;
+    private TrieNode              root;
+    private LinkedList<TrieNode>  predictions;
+	private ArrayList<String>     completions;
+    private int                   size;
     
 
     public AutoCompleteDictionaryTrie() {
 		root = new TrieNode();
+		predictions = new LinkedList<>();
+		completions = new ArrayList<>();
+		size = 0;
 	}
 	
 	/** Insert a word into the trie.
@@ -85,12 +92,16 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		return false;
 	}
 
+	public static void main(String args[]) {
+
+	}
+
 	/** 
      * Return a list, in order of increasing (non-decreasing) word length,
      * containing the numCompletions shortest legal completions 
-     * of the prefix string. All legal completions must be valid words in the 
-     * dictionary. If the prefix itself is a valid word, it is included 
-     * in the list of returned words. 
+     * of the prefix string. All legal completions must be valid words in the
+     * dictionary. If the prefix itself is a valid word, it is included
+	 * in the list of returned words.
      * 
      * The list of completions must contain 
      * all of the shortest completions, but when there are ties, it may break 
@@ -108,29 +119,54 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
      */
 	@Override
  	public List<String> predictCompletions(String prefix, int numCompletions) {
-    	 // TODO: Implement this method
-    	 // This method should implement the following algorithm:
-    	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
-    	 //    empty list
-    	 // 2. Once the stem is found, perform a breadth first search to generate completions
-    	 //    using the following algorithm:
-    	 //    Create a queue (LinkedList) and add the node that completes the stem to the back
-    	 //       of the list.
-    	 //    Create a list of completions to return (initially empty)
-    	 //    While the queue is not empty and you don't have enough completions:
-    	 //       remove the first Node from the queue
-    	 //       If it is a word, add it to the completions list
-    	 //       Add all of its child nodes to the back of the queue
-    	 // Return the list of completions
-    	 
-         return null;
+		char[]             chars       =  prefix.toLowerCase().toCharArray();
+		int                len         =  chars.length - 1;
+		TrieNode           n           =  root;
+		TrieNode           next;
+
+		completions.clear();
+
+		for (int i = 0; i <= len; i++) {
+			char c = chars[i];
+			next = n.getChild(c);
+			if (next == null) return completions;
+			n = next;
+		}
+
+		predictions.clear();
+		predictions.add(n);
+		TrieNode curr;
+
+		// 3. Perform a Breadth first search to generate completions
+		// 	  While the LinkedList is not empty and you don't have enough completions:
+		while (!predictions.isEmpty() && numCompletions > 0) {
+
+			// Remove the first Node from the LinkedList
+			curr = predictions.getFirst();
+
+			// If it is a word, add it to the completions list
+			if (curr.endsWord()) {
+				completions.add(curr.getText());
+				numCompletions--;
+			}
+
+			// Add all of its child nodes to the back of the LinkedList
+			for (Character c : curr.getValidNextCharacters()) {
+				TrieNode nextN = curr.getChild(c);
+				if (nextN != null) predictions.add(nextN);
+			}
+		}
+
+         return completions;
      }
+
 
  	// For debugging
  	public void printTree() {
  		printNode(root);
  	}
- 	
+
+
  	/** Do a pre-order traversal from this node down */
  	public void printNode(TrieNode curr) {
  		if (curr == null) return;
@@ -143,6 +179,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
  			printNode(next);
  		}
  	}
+
 
 	/** Helper method for size() */
 	private void wordCount(TrieNode curr) {
