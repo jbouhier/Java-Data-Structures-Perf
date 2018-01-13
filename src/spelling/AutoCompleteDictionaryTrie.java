@@ -92,10 +92,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		return false;
 	}
 
-	public static void main(String args[]) {
-
-	}
-
 	/** 
      * Return a list, in order of increasing (non-decreasing) word length,
      * containing the numCompletions shortest legal completions 
@@ -135,37 +131,14 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 
 		predictions.clear();
 		predictions.add(n);
-		TrieNode curr;
-
-		// 3. Perform a Breadth first search to generate completions
-		// 	  While the LinkedList is not empty and you don't have enough completions:
-		while (!predictions.isEmpty() && numCompletions > 0) {
-
-			// Remove the first Node from the LinkedList
-			curr = predictions.getFirst();
-
-			// If it is a word, add it to the completions list
-			if (curr.endsWord()) {
-				completions.add(curr.getText());
-				numCompletions--;
-			}
-
-			// Add all of its child nodes to the back of the LinkedList
-			for (Character c : curr.getValidNextCharacters()) {
-				TrieNode nextN = curr.getChild(c);
-				if (nextN != null) predictions.add(nextN);
-			}
-		}
-
+		breadthFirstSearch(numCompletions);
          return completions;
      }
-
 
  	// For debugging
  	public void printTree() {
  		printNode(root);
  	}
-
 
  	/** Do a pre-order traversal from this node down */
  	public void printNode(TrieNode curr) {
@@ -180,7 +153,6 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
  		}
  	}
 
-
 	/** Helper method for size() */
 	private void wordCount(TrieNode curr) {
 		if (curr == null) return;
@@ -192,5 +164,29 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		}
 	}
 
-	
+	/**
+	 * Helper method of predictCompletions()
+	 * Breadth first search to generate completions (smaller to larger words)
+	 * @param numCompletions number of words completions to display
+	 */
+	private void breadthFirstSearch(int numCompletions) {
+		TrieNode           curr;
+
+		while (!predictions.isEmpty() && numCompletions > 0) {
+			curr = predictions.removeFirst();
+
+			// If it is a word, add it to the completions list
+			if (curr.endsWord()) {
+				completions.add(curr.getText());
+				numCompletions--;
+			}
+
+			// Add all of its child nodes to the back of the LinkedList
+			for (Character c : curr.getValidNextCharacters()) {
+				predictions.add(curr.getChild(c));
+			}
+		}
+	}
+
+
 }
