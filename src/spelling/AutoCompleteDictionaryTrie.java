@@ -24,7 +24,8 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 		size = 0;
 	}
 	
-	/** Insert a word into the trie.
+	/**
+	 * Insert a word into the trie.
 	 * For the basic part of the assignment (part 2), you should convert the 
 	 * string to all lower case before you insert it. 
 	 * 
@@ -40,26 +41,28 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 */
 	@Override
 	public boolean addWord(String word) {
-		char[]    chars  =  word.toLowerCase().toCharArray();
-		int       len    =  chars.length - 1;
-		TrieNode  n      =  root;
+		char[]    chars    =  word.toLowerCase().toCharArray();
+		int       len      =  chars.length - 1;
+		boolean   newWord  = true;
+		TrieNode  n        =  root;
+		TrieNode  next;
 
 		for (int i = 0; i <= len; i++) {
 			char c = chars[i];
-			TrieNode next = n.getChild(c);
+			next = n.getChild(c);
 
-			if (next == null) {
+			if (next == null)
 				n.insert(c);
-				n.getChild(c).setEndsWord(i == len);
-				if (i == len) return true;
-			} else if (i == len) {
-				next.setEndsWord(true);
-				return true;
+
+			if (i == len) {
+				if (next != null && next.endsWord()) newWord = false;
+				else n.getChild(c).setEndsWord(true);
 			}
+
 			n = n.getChild(c);
 		}
 
-		return false;
+		return newWord;
 	}
 	
 	/** 
@@ -68,6 +71,7 @@ public class AutoCompleteDictionaryTrie implements Dictionary, AutoComplete {
 	 */
 	@Override
 	public int size() {
+		size = 0;
 		wordCount(root);
 	    return size;
 	}
