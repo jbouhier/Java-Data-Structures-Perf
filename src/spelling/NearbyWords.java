@@ -31,9 +31,9 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return list of Strings which are nearby the original string
 	 */
 	public List<String> distanceOne(String s, boolean wordsOnly) {
-		   List<String> retList = new ArrayList<String>();
-//		   insertions(s, retList, wordsOnly);
-//		   substitution(s, retList, wordsOnly);
+		   List<String> retList = new ArrayList<>();
+		   insertions(s, retList, wordsOnly);
+		   substitution(s, retList, wordsOnly);
 		   deletions(s, retList, wordsOnly);
 		   return retList;
 	}
@@ -47,19 +47,12 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void substitution(String s, List<String> currentList, boolean wordsOnly) {
-		// for each letter in the s and for all possible replacement characters
 		for (int index = 0; index < s.length(); index++) {
 			for (int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
-				StringBuffer sb = new StringBuffer(s);
+				StringBuilder sb = new StringBuilder(s);
 				sb.setCharAt(index, (char)charCode);
-
-				// if the item isn't in the list, isn't the original string, and
-				// (if wordsOnly is true) is a real word, add to the list
-				if (!currentList.contains(sb.toString()) &&
-						(!wordsOnly || dict.isWord(sb.toString())) &&
-						!s.equals(sb.toString())) {
-					currentList.add(sb.toString());
-				}
+				String tmpStr = sb.toString();
+				addWordToList(s, tmpStr, currentList, wordsOnly);
 			}
 		}
 	}
@@ -144,21 +137,19 @@ public class NearbyWords implements SpellingSuggest {
 
 
    public static void main(String[] args) {
-	   // basic testing code to get started
-
-//	   String word = "sheeep";
+		String word = "sheeep";
 	   // Pass NearbyWords any Dictionary implementation you prefer
 	   Dictionary d = new DictionaryHashSet();
 	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
 	   NearbyWords w = new NearbyWords(d);
-//	   List<String> l = w.distanceOne(word, true);
-//	   System.out.println("One away word Strings for for \""+word+"\" are:");
-//	   System.out.println(l+"\n");
+	   List<String> l = w.distanceOne(word, true);
+	   System.out.println("One away word Strings for for \""+word+"\" are:");
+	   System.out.println(l+"\n");
 
-	   String word = "conveye";
-	   List<String> list = new ArrayList<>();
-	   System.out.println("--- Insertions generated: ---");
-	   w.insertions(word, list, true);
+//	   String word = "conveye";
+//	   List<String> list = new ArrayList<>();
+//	   System.out.println("--- Debug: ---");
+//	   w.substitution(word, list, true);
 
 
 //	   word = "tailo";
