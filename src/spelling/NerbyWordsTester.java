@@ -30,22 +30,30 @@ public class NerbyWordsTester {
 
 	@Test
 	public void deletionsIsWord() {
-		List<String> control = new ArrayList<>();
-		control.add("horse");
+		List<String> expected = new ArrayList<>();
+		expected.add("horse");
 		String word = "horsee";
 		nw.deletions(word, list, true);
-		Assert.assertEquals(control, list);
+		Assert.assertEquals(expected, list);
 	}
 
 	@Test
 	public void deletionsNotWord() {
-		List<String> control = Stream
+		List<String> expected = Stream
 				.of("orsee", "hrsee", "hosee", "horee", "horse")
 				.collect(Collectors.toCollection(ArrayList::new));
 
 		String word = "horsee";
 		nw.deletions(word, list, false);
-		Assert.assertEquals(control, list);
+		Assert.assertEquals(expected, list);
+	}
+
+	@Test
+	public void insertionsIsWord() {
+		List<String> expected = new ArrayList<>(Arrays.asList("conveyed", "conveyer"));
+		String word = "conveye";
+		nw.insertions(word, list, true);
+		Assert.assertEquals(expected, list);
 	}
 
 
