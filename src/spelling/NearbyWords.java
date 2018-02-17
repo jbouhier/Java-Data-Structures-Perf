@@ -102,11 +102,13 @@ public class NearbyWords implements SpellingSuggest {
 			sb.deleteCharAt(index);
 			String tmpStr = sb.toString();
 
-			if (wordsOnly && dict.isWord(tmpStr))
-				currentList.add(tmpStr);
-			else if (!wordsOnly)
-				currentList.add(tmpStr);
+			if (!currentList.contains(tmpStr) && !s.equals(tmpStr)) {
+				if (wordsOnly && dict.isWord(tmpStr))
+					currentList.add(tmpStr);
+				else if (!wordsOnly)
+					currentList.add(tmpStr);
 			}
+		}
 	}
 
 
