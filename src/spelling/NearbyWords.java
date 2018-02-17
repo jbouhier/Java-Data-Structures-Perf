@@ -118,44 +118,28 @@ public class NearbyWords implements SpellingSuggest {
 	 */
 	@Override
 	public List<String> suggestions(String word, int numSuggestions) {
+		List<String> queue = new LinkedList<>();
+		HashSet<String> visited = new HashSet<>();
+		List<String> retList = new LinkedList<>();
 
-		// initial variables
-		List<String> queue = new LinkedList<String>();     // String to explore
-		HashSet<String> visited = new HashSet<String>();   // to avoid exploring the same  
-														   // string multiple times
-		List<String> retList = new LinkedList<String>();   // words to return
-		 
-		
-		// insert first node
 		queue.add(word);
 		visited.add(word);
-					
-		// TODO: Implement the remainder of this method, see assignment for algorithm
-		
+
+		while (!queue.isEmpty() && retList.size() <= numSuggestions) {
+			String curr = (String) ((LinkedList) queue).removeFirst();
+			List<String> neighbors = distanceOne(curr, true);
+
+			for (String n : neighbors) {
+				if (!visited.contains(n)) {
+					visited.add(n);
+					queue.add(n);
+					if (dict.isWord(n)) retList.add(n);
+				}
+			}
+		}
+
 		return retList;
 	}
 
-
-   public static void main(String[] args) {
-		String word = "sheeep";
-	   // Pass NearbyWords any Dictionary implementation you prefer
-	   Dictionary d = new DictionaryHashSet();
-	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
-	   NearbyWords w = new NearbyWords(d);
-	   List<String> l = w.distanceOne(word, true);
-	   System.out.println("One away word Strings for for \""+word+"\" are:");
-	   System.out.println(l+"\n");
-
-//	   String word = "conveye";
-//	   List<String> list = new ArrayList<>();
-//	   System.out.println("--- Debug: ---");
-//	   w.substitution(word, list, true);
-
-
-//	   word = "tailo";
-//	   List<String> suggest = w.suggestions(word, 10);
-//	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
-//	   System.out.println(suggest);
-   }
 
 }
