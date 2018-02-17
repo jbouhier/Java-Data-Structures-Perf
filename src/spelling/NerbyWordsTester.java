@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -64,5 +65,12 @@ public class NerbyWordsTester {
 		Assert.assertEquals(expected, list);
 	}
 
+	@Test
+	public void distanceOneIsWord() {
+		List<String> expected = new ArrayList<>(Collections.singletonList("sheep"));
+		String word = "sheeep";
+		list = nw.distanceOne(word, true);
+		Assert.assertEquals(expected, list);
+	}
 
 }
