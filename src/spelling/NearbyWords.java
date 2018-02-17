@@ -73,17 +73,14 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void insertions(String s, List<String> currentList, boolean wordsOnly) {
-		StringBuffer sb = new StringBuffer(s);
-
+		// TODO to fix, substitute chars instead of inserting
 		for (int index = 0; index < s.length(); index++) {
+			StringBuilder sb = new StringBuilder(s);
 			for (int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
 				sb.setCharAt(index, (char)charCode);
-
-				if (!currentList.contains(sb.toString()) &&
-						(!wordsOnly || dict.isWord(sb.toString())) &&
-						!s.equals(sb.toString())) {
-					currentList.add(sb.toString());
-				}
+				String tmpStr = sb.toString();
+				System.out.println(tmpStr);
+				addWordToList(s, tmpStr, currentList, wordsOnly);
 			}
 		}
 	}
@@ -101,16 +98,26 @@ public class NearbyWords implements SpellingSuggest {
 			StringBuilder sb = new StringBuilder(s);
 			sb.deleteCharAt(index);
 			String tmpStr = sb.toString();
-
-			if (!currentList.contains(tmpStr) && !s.equals(tmpStr)) {
-				if (wordsOnly && dict.isWord(tmpStr))
-					currentList.add(tmpStr);
-				else if (!wordsOnly)
-					currentList.add(tmpStr);
-			}
+			addWordToList(s, tmpStr, currentList, wordsOnly);
 		}
 	}
 
+
+	/**
+	 * Helper method to avoid code duplication
+	 * @param s The original String
+	 * @param newWord The 'one-off' generated String
+	 * @param currentList is the list of words to append modified words
+	 * @param wordsOnly controls whether to return only words or any String
+	 */
+	private void addWordToList(String s, String newWord, List<String> currentList, boolean wordsOnly) {
+		if (!currentList.contains(newWord) && !s.equals(newWord)) {
+			if (wordsOnly && dict.isWord(newWord))
+				currentList.add(newWord);
+			else if (!wordsOnly)
+				currentList.add(newWord);
+		}
+	}
 
 	/** Add to the currentList Strings that are one character deletion away
 	 * from the input string.  
@@ -141,14 +148,20 @@ public class NearbyWords implements SpellingSuggest {
    public static void main(String[] args) {
 	   // basic testing code to get started
 
-	   String word = "sheeep";
+//	   String word = "sheeep";
 	   // Pass NearbyWords any Dictionary implementation you prefer
 	   Dictionary d = new DictionaryHashSet();
 	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
 	   NearbyWords w = new NearbyWords(d);
-	   List<String> l = w.distanceOne(word, true);
-	   System.out.println("One away word Strings for for \""+word+"\" are:");
-	   System.out.println(l+"\n");
+//	   List<String> l = w.distanceOne(word, true);
+//	   System.out.println("One away word Strings for for \""+word+"\" are:");
+//	   System.out.println(l+"\n");
+
+	   String word = "conveye";
+	   List<String> list = new ArrayList<>();
+	   System.out.println("--- Insertions generated: ---");
+	   w.insertions(word, list, true);
+
 
 //	   word = "tailo";
 //	   List<String> suggest = w.suggestions(word, 10);
