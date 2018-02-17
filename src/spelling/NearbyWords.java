@@ -73,13 +73,11 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return
 	 */
 	public void insertions(String s, List<String> currentList, boolean wordsOnly) {
-		// TODO to fix, substitute chars instead of inserting
-		for (int index = 0; index < s.length(); index++) {
-			StringBuilder sb = new StringBuilder(s);
+		for (int index = 0; index <= s.length(); index++) {
 			for (int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
-				sb.setCharAt(index, (char)charCode);
+				StringBuilder sb = new StringBuilder(s);
+				sb.insert(index, (char)charCode);
 				String tmpStr = sb.toString();
-				System.out.println(tmpStr);
 				addWordToList(s, tmpStr, currentList, wordsOnly);
 			}
 		}
