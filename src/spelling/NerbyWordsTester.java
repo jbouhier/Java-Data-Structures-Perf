@@ -30,7 +30,8 @@ public class NerbyWordsTester {
 
 	@Test
 	public void deletionsIsWord() {
-		List<String> control = new ArrayList<>(Arrays.asList("horse", "horse"));
+		List<String> control = new ArrayList<>();
+		control.add("horse");
 		String word = "horsee";
 		nw.deletions(word, list, true);
 		Assert.assertEquals(control, list);
@@ -39,7 +40,7 @@ public class NerbyWordsTester {
 	@Test
 	public void deletionsNotWord() {
 		List<String> control = Stream
-				.of("orsee", "hrsee", "hosee", "horee", "horse", "horse")
+				.of("orsee", "hrsee", "hosee", "horee", "horse")
 				.collect(Collectors.toCollection(ArrayList::new));
 
 		String word = "horsee";
