@@ -73,4 +73,21 @@ public class NerbyWordsTester {
 		Assert.assertEquals(expected, list);
 	}
 
+	@Test
+	public void suggestions() {
+		List<String> expected = Stream
+				.of("conveyed", "conveyer", "convene", "conveys", "convey", "convoyed",
+					"convened", "conveyers", "conveyor", "convenes", "convent", "convoys",
+					"coveys", "conley", "convoy", "convex", "covey", "convoked", "conveyors",
+					"convents", "consent", "content", "convert", "covens", "covers",
+					"covets", "coves", "cooley", "copley", "cowley", "corey", "coven",
+					"cover", "covet", "cove", "convokes", "convoke", "consents", "contents",
+					"converts", "contest", "context", "contend")
+				.collect(Collectors.toList());
+
+		String word = "conveye";
+		list = nw.suggestions(word, 42);
+		Assert.assertEquals(expected, list);
+	}
+
 }
