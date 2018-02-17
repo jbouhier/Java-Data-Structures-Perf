@@ -56,5 +56,13 @@ public class NerbyWordsTester {
 		Assert.assertEquals(expected, list);
 	}
 
+	@Test
+	public void substitutionIsWord() {
+		List<String> expected = new ArrayList<>(Arrays.asList("convene", "conveys"));
+		String word = "conveye";
+		nw.substitution(word, list, true);
+		Assert.assertEquals(expected, list);
+	}
+
 
 }
