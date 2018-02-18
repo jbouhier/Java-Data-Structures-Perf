@@ -26,39 +26,39 @@ public class WPTree implements WordPath {
 	// You'll need to create your own NearbyWords object here.
 	public WPTree () {
 		this.root = null;
-		// TODO initialize a NearbyWords object
-		// Dictionary d = new DictionaryHashSet();
-		// DictionaryLoader.loadDictionary(d, "data/dict.txt");
-		// this.nw = new NearbyWords(d);
+		 Dictionary d = new DictionaryHashSet();
+		 DictionaryLoader.loadDictionary(d, "data/dict.txt");
+		 this.nw = new NearbyWords(d);
 	}
 	
-	//This constructor will be used by the grader code
+	// This constructor will be used by the grader code
 	public WPTree (NearbyWords nw) {
 		this.root = null;
 		this.nw = nw;
 	}
 	
-	// see method description in WordPath interface
-	public List<String> findPath(String word1, String word2) 
-	{
+	// See method description in WordPath interface
+	public List<String> findPath(String word1, String word2) {
 	    // TODO: Implement this method.
 	    return new LinkedList<String>();
 	}
 	
 	// Method to print a list of WPTreeNodes (useful for debugging)
 	private String printQueue(List<WPTreeNode> list) {
-		String ret = "[ ";
+		StringBuilder ret = new StringBuilder("[ ");
 		
 		for (WPTreeNode w : list) {
-			ret+= w.getWord()+", ";
+			ret.append(w.getWord());
+			ret.append(", ");
 		}
-		ret+= "]";
-		return ret;
+		ret.append("]");
+		return ret.toString();
 	}
 	
 }
 
-/* Tree Node in a WordPath Tree. This is a standard tree with each
+/**
+ * Tree Node in a WordPath Tree. This is a standard tree with each
  * node having any number of possible children.  Each node should only
  * contain a word in the dictionary and the relationship between nodes is
  * that a child is one character mutation (deletion, insertion, or
@@ -81,12 +81,13 @@ class WPTreeNode {
         this.children = new LinkedList<WPTreeNode>();
     }
     
-    /** Add a child of a node containing the String s
-     *  precondition: The word is not already a child of this node
+    /**
+	 * Add a child of a node containing the String s
+     * precondition: The word is not already a child of this node
      * @param s The child node's word
 	 * @return The new WPTreeNode
 	 */
-    public WPTreeNode addChild(String s){
+    public WPTreeNode addChild(String s) {
         WPTreeNode child = new WPTreeNode(s, this);
         this.children.add(child);
         return child;
@@ -100,47 +101,52 @@ class WPTreeNode {
         return this.children;
     }
    
-    /** Allows you to build a path from the root node to 
-     *  the calling object
+    /**
+	 * Allows you to build a path from the root node to the calling object
      * @return The list of strings starting at the root and 
      *         ending at the calling object
 	 */
     public List<String> buildPathToRoot() {
         WPTreeNode curr = this;
-        List<String> path = new LinkedList<String>();
-        while(curr != null) {
+        List<String> path = new LinkedList<>();
+        while (curr != null) {
             path.add(0,curr.getWord());
             curr = curr.parent; 
         }
         return path;
     }
     
-    /** Get the word for the calling object
-     *
+    /**
+	 * Get the word for the calling object
 	 * @return Getter for calling object's word
 	 */
     public String getWord() {
         return this.word;
     }
     
-    /** toString method
-    *
+    /**
+	 * toString method
 	 * @return The string representation of a WPTreeNode
 	 */
     public String toString() {
-        String ret = "Word: "+word+", parent = ";
-        if(this.parent == null) {
-           ret+="null.\n";
+        StringBuilder ret = new StringBuilder("Word: ");
+        ret.append(word);
+        ret.append(", parent = ");
+
+        if (this.parent == null) {
+			ret.append("null.\n");
         }
         else {
-           ret += this.parent.getWord()+"\n";
+           ret.append(this.parent.getChildren());
+           ret.append("\n");
         }
-        ret+="[ ";
-        for(WPTreeNode curr: children) {
-            ret+=curr.getWord() + ", ";
+	   ret.append("[ ");
+        for (WPTreeNode curr: children) {
+            ret.append(curr.getWord());
+            ret.append(", ");
         }
-        ret+=(" ]\n");
-        return ret;
+		ret.append(" ]\n");
+        return ret.toString();
     }
 
 }
